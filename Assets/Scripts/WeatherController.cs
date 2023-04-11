@@ -10,22 +10,20 @@ public class WeatherController : MonoBehaviour
     private float fullIntensity;
     private float cloudValue = 0f;
 
+    void OnEnable()
+    {
+        Messenger.AddListener(GameEvent.WEATHER_UPDATED, OnWeatherUpdated);
+    }
+
+    void OnDisable()
+    {
+        Messenger.RemoveListener(GameEvent.WEATHER_UPDATED, OnWeatherUpdated);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         fullIntensity = sun.intensity;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        var newCloudValue = cloudValue + .005f;
-        newCloudValue = Mathf.Clamp(newCloudValue, 0, 1);
-        if (Mathf.Approximately(cloudValue, newCloudValue))
-            return;
-
-        cloudValue = newCloudValue;
-        SetOvercast(cloudValue);
     }
 
     private void SetOvercast(float value)
@@ -34,5 +32,10 @@ public class WeatherController : MonoBehaviour
         var newIntensity = fullIntensity - (fullIntensity * value);
         newIntensity = Mathf.Clamp(newIntensity, 0, fullIntensity);
         sun.intensity = newIntensity;
+    }
+
+    private void OnWeatherUpdated()
+    {
+        SetOvercast(Managers.Weather.CloudValue);
     }
 }
