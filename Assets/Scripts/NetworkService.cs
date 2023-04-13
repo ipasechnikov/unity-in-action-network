@@ -35,7 +35,7 @@ public class NetworkService
         return CallAPI(jsonApi, callback);
     }
 
-    public IEnumerator GetImage(Action<Texture2D> callback)
+    public IEnumerator DownloadImage(Action<Texture2D> callback)
     {
         var request = UnityWebRequestTexture.GetTexture(webImage);
         yield return request.SendWebRequest();

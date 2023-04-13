@@ -25,7 +25,13 @@ public class ImageManager : MonoBehaviour, IGameManager
     public void GetWebImage(Action<Texture2D> callback)
     {
         if (webImage == null)
-            StartCoroutine(network.GetImage(callback));
+            StartCoroutine(network.DownloadImage(
+                image =>
+                {
+                    webImage = image;
+                    callback(webImage);
+                }
+            ));
         else
             callback(webImage);
     }
