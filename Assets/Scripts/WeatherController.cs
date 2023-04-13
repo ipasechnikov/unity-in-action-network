@@ -8,7 +8,6 @@ public class WeatherController : MonoBehaviour
     [SerializeField] Light sun;
 
     private float fullIntensity;
-    private float cloudValue = 0f;
 
     void OnEnable()
     {
