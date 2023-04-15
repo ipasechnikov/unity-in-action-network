@@ -40,15 +40,13 @@ public class WeatherManager : MonoBehaviour, IGameManager
         Status = ManagerStatus.Started;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void LogWeather(string name)
     {
-        
+        StartCoroutine(network.LogWeather(name, CloudValue, OnLogged));
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnLogged(string response)
     {
-        
+        Debug.Log(response);
     }
 }
